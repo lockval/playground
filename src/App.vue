@@ -29,7 +29,7 @@ function cls(){
   <button @click="run()">run</button>with:
   <!-- {{ $store.state.config.radio }} -->
 
-	<input type="radio" id="JavaScript" value="JavaScript" v-bind="$store.state.config.radio" @click="$store.state.radioChange('JavaScript')" />
+	<input type="radio" id="JavaScript" value="JavaScript" v-model="$store.state.config.radio" @click="$store.state.radioChange('JavaScript')" />
 	<label for="JavaScript">JavaScript</label>
 
 	<input type="radio" id="Python" value="Python" v-model="$store.state.config.radio" @click="$store.state.radioChange('Python')"/>
