@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { defineComponent, ref, shallowRef } from 'vue'
 import { Codemirror } from 'vue-codemirror'
-import { javascript } from '@codemirror/lang-javascript'
+import { store, type Dict } from "./g/data";
 
-
-
-const code = ref(`console.log('Hello, world!')`)
-const extensions = [javascript()]
 
 // Codemirror EditorView instance ref
 const view = shallowRef()
@@ -15,41 +11,44 @@ const handleReady = (payload: any) => {
 }
 
 function run(){
-  console.log("run");
-  
+  store.commit("log","run");
 }
-
-// // Status is available at all times via Codemirror EditorView
-// const getCodemirrorStates = () => {
-//   const state = view.value.state
-//   const ranges = state.selection.ranges
-//   const selected = ranges.reduce((r, range) => r + range.to - range.from, 0)
-//   const cursor = ranges[0].anchor
-//   const length = state.doc.length
-//   const lines = state.doc.lines
-//   // more state info ...
-//   // return ...
-// }
-
-
-
-const log = console.log
+function share(){
+  console.log("share");
+  history.pushState(null, "", '?lang='+store.state.config.radio+"&code=xxx");
+}
+function cls(){
+  store.commit("clear");
+}
 
 
 
 </script>
 
 <template>
-  <button click="run()">run</button>
-  <button>share</button>
+  <button @click="run()">run</button>with:
+  <!-- {{ $store.state.config.radio }} -->
+
+	<input type="radio" id="JavaScript" value="JavaScript" v-bind="$store.state.config.radio" @click="$store.state.radioChange('JavaScript')" />
+	<label for="JavaScript">JavaScript</label>
+
+	<input type="radio" id="Python" value="Python" v-model="$store.state.config.radio" @click="$store.state.radioChange('Python')"/>
+	<label for="Python">Python</label>
+
+	<input type="radio" id="Lua" value="Lua" v-model="$store.state.config.radio" @click="$store.state.radioChange('Lua')"/>
+	<label for="Lua">Lua</label>
+
+  &nbsp;
+
+  <button @click="share()">share</button>
   
-  <codemirror v-model="code" placeholder="Code goes here..." :style="{ height: '60vh' }" :autofocus="true"
-    :indent-with-tab="true" :tab-size="2" :extensions="extensions" @ready="handleReady" @change="log('change', $event)"
-    @focus="log('focus', $event)" @blur="log('blur', $event)" />
+  <codemirror v-model="$store.state.config.code" placeholder="Code goes here..."
+    :style="{ height: '60vh' }" :autofocus="true" :indent-with-tab="true"
+    :tab-size="2" :extensions="store.state.config.extensions" @ready="handleReady" />
   
-  <button>cls</button>
+  <button @click="cls()">cls</button>
   <div>
-    <textarea readonly :style="{ height: '34vh', width: '99vw' }"></textarea>
+    <textarea readonly :style="{ height: '32.5vh', width: '99vw' }"  v-model="$store.state.config.log"></textarea>
   </div>
 </template>
 
