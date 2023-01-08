@@ -40,7 +40,7 @@ function cls(){
 
   &nbsp;
 
-  <button @click="share()">share</button>
+  <button @click="share()">share</button>&nbsp;<a href="https://lockval.com" target="_blank">Lockval Engine</a>
   
   <codemirror v-model="$store.state.config.code" placeholder="Code goes here..."
     :style="{ height: '60vh' }" :autofocus="true" :indent-with-tab="true"
