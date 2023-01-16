@@ -10,7 +10,7 @@ const luaExtensions = [javascript()]
 const allExtensions: Dict = {
   "JavaScript": javascriptExtensions,
   "Python": pythonExtensions,
-  "Lua": luaExtensions,
+  "": luaExtensions,
 }
 
 
@@ -24,7 +24,7 @@ class mystatus {
   config: Dict = {
     radio: "JavaScript",
     log: "",
-    code: `console.log('Hello, world!')`,
+    code: ``,
 
     extensions: javascriptExtensions,
   };
@@ -43,6 +43,7 @@ class mystatus {
   radioChange = (lang: string) => {
     // console.log(lang)
     // this.config.radio=lang
+    history.pushState(null, "", "?");
     let ext = allExtensions[lang];
     if (ext) {
       this.config.extensions = ext;
