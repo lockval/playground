@@ -6,12 +6,13 @@ import { ViewUpdate } from "@codemirror/view"
 import { store, type Dict } from "./g/data";
 import LZString from "lz-string"
 
-const SHAREURL = "https://share.api.lockval.com"
-// const SHAREURL = "http://127.0.0.1:37219"
-const X_PPA_PSK = "c34f"
+// please run 'npm run server'
+const SHAREURL = "http://127.0.0.1:37219"
+const X_PPA_PSK = "thisisyourpsk"
 
-const RUNURL = "https://console03t.lockval.top:2083"
-const RUNPWD = "654321"
+// please start your apidemo server
+const RUNURL = "http://127.0.0.1:59102"
+const RUNPWD = "2222"
 
 const radio2pathname: Dict = {
   "JavaScript": "js",
