@@ -41,7 +41,7 @@ function encode(message: string): Uint8Array {
   // return new TextEncoder().encode(message);
 }
 
-function decode(compressed: Uint8Array): string {
+function decode(compressed: Uint8Array): string|null {
   return LZString.decompressFromUint8Array(compressed);
 }
 
