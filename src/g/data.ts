@@ -30,20 +30,21 @@ class mystatus {
   };
 
   setLang(lang: string | null) {
-    if(!lang){
+    if (!lang) {
       return false;
     }
-    if (this.radioChange(lang)) {
+    if (this.radioChange(lang, true)) {
       this.config.radio = lang;
       return true;
     }
     return false;
   }
 
-  radioChange = (lang: string) => {
-    // console.log(lang)
+  radioChange = (lang: string, noPush: boolean) => {
     // this.config.radio=lang
-    history.pushState(null, "", "?");
+    if (!noPush) {
+      history.pushState(null, "", "?");
+    }
     let ext = allExtensions[lang];
     if (ext) {
       this.config.extensions = ext;
@@ -66,7 +67,7 @@ export const store = createStore({
     clear(state: mystatus) {
       state.config.log = "";
     },
-    setCode(state: mystatus,o: string) {
+    setCode(state: mystatus, o: string) {
       state.config.code = o;
     },
 

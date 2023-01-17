@@ -4,8 +4,10 @@ import { defineComponent, ref, shallowRef, onMounted } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 import { ViewUpdate } from "@codemirror/view"
 import { store, type Dict } from "./g/data";
+import LZString from "lz-string"
 
 const SHAREURL = "https://share.api.lockval.com"
+// const SHAREURL = "http://127.0.0.1:37219"
 const X_PPA_PSK = "c34f"
 
 const RUNURL = "https://console03t.lockval.top:2083"
@@ -35,7 +37,12 @@ async function getHash(u8a: Uint8Array) {
 }
 
 function encode(message: string): Uint8Array {
-  return new TextEncoder().encode(message);
+  return LZString.compressToUint8Array(message);
+  // return new TextEncoder().encode(message);
+}
+
+function decode(compressed: Uint8Array): string {
+  return LZString.decompressFromUint8Array(compressed);
 }
 
 async function run() {
@@ -48,6 +55,10 @@ async function run() {
       method: "POST",
       body: store.state.config.code,
     })
+    if (!resp.ok) {
+      throw `Response.status=${resp.status}`;
+    }
+
   } catch (err) {
     alert(`oops! ${err}`)
     return
@@ -83,7 +94,6 @@ async function download(key: string) {
 }
 
 async function share() {
-  // console.log("share");
 
   let u8a = encode(store.state.config.code);
   let hash = await getHash(u8a)
@@ -128,8 +138,10 @@ onMounted(() => {
       if (!resp.ok) {
         throw `Response.status=${resp.status}`;
       }
-      return resp.text()
-    }).then(downloadCode => {
+      return resp.arrayBuffer()
+    }).then(encodeData => {
+
+      let downloadCode = decode(new Uint8Array(encodeData))
 
       store.commit("setCode", downloadCode);
 
