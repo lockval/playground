@@ -180,7 +180,8 @@ onMounted(() => {
   &nbsp;
 
   <button @click="share()">share</button>&nbsp;Welcome to the playground of <a href="https://lockval.com"
-    target="_blank">Lockval Engine</a>
+    target="_blank">Lockval Engine</a>&nbsp;(&nbsp;<a href="https://github.com/lockval/playground"
+    target="_blank">source</a>&nbsp;)
 
   <codemirror v-model="$store.state.config.code" placeholder="Code goes here..." :style="{ height: '60vh' }"
     :autofocus="true" :indent-with-tab="true" :tab-size="2" :extensions="store.state.config.extensions"
