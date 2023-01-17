@@ -3,7 +3,7 @@ const port = 37219;
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+  'Access-Control-Allow-Methods': 'GET,HEAD,POST,OPTIONS',
   'Access-Control-Max-Age': 2592000, // 30 days
 };
 
@@ -13,7 +13,13 @@ console.log(`start http ok, port is ${port}.`)
 http.createServer((req, res) => {
 
   if (req.method === 'OPTIONS') {
-    res.writeHead(204, headers);
+    let acrh = req.headers["access-control-request-headers"]
+    let optHeaders={}
+    Object.assign(optHeaders, headers);
+    if(acrh){
+      optHeaders["Access-Control-Allow-Headers"]=acrh
+    }
+    res.writeHead(204, optHeaders);
     res.end();
     return;
 
@@ -30,7 +36,7 @@ http.createServer((req, res) => {
 
   }else if (req.method === 'POST') {
     let body = [];
-    request.on('data', (chunk) => {
+    req.on('data', (chunk) => {
       body.push(chunk);
     }).on('end', () => {
       body = Buffer.concat(body)
