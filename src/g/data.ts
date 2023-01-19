@@ -10,7 +10,7 @@ const luaExtensions = [javascript()]
 const allExtensions: Dict = {
   "JavaScript": javascriptExtensions,
   "Python": pythonExtensions,
-  "": luaExtensions,
+  "Lua": luaExtensions,
 }
 
 
