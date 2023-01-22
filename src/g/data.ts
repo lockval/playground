@@ -5,7 +5,7 @@ import { python } from '@codemirror/lang-python'
 
 const javascriptExtensions = [javascript()]
 const pythonExtensions = [python()]
-const luaExtensions = [javascript()]
+const luaExtensions = [python()]
 
 const allExtensions: Dict = {
   "JavaScript": javascriptExtensions,
