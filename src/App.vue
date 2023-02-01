@@ -42,7 +42,7 @@ function encode(message: string): Uint8Array {
   // return new TextEncoder().encode(message);
 }
 
-function decode(compressed: Uint8Array): string|null {
+function decode(compressed: Uint8Array): string | null {
   return LZString.decompressFromUint8Array(compressed);
 }
 
@@ -125,6 +125,12 @@ function cls() {
 }
 
 onMounted(() => {
+
+  let textarea = document.getElementById('textarea_id');
+  setInterval(function () {
+    textarea.scrollTop = textarea.scrollHeight;
+  }, 500);
+
   let myURL = new URL(document.URL)
   let searchParams = new URLSearchParams(myURL.search);
 
@@ -189,7 +195,8 @@ onMounted(() => {
 
   <button @click="cls()">cls</button>
   <div>
-    <textarea readonly :style="{ height: '32.5vh', width: '99vw' }" v-model="$store.state.config.log"></textarea>
+    <textarea id="textarea_id" readonly :style="{ height: '32.5vh', width: '99vw' }"
+      v-model="$store.state.config.log"></textarea>
   </div>
 </template>
 
