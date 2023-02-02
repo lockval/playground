@@ -67,6 +67,12 @@ async function run() {
 
   let log = await resp.text()
   store.commit("log", log);
+  requestAnimationFrame(() => {
+    let textarea = document.getElementById('textarea_id');
+    if (textarea) {
+      textarea.scrollTop = textarea.scrollHeight;
+    }
+  });
 
 
 
@@ -125,11 +131,6 @@ function cls() {
 }
 
 onMounted(() => {
-
-  let textarea = document.getElementById('textarea_id');
-  setInterval(function () {
-    textarea.scrollTop = textarea.scrollHeight;
-  }, 500);
 
   let myURL = new URL(document.URL)
   let searchParams = new URLSearchParams(myURL.search);
