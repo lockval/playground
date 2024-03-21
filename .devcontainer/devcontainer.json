@@ -1,4 +1,7 @@
 {
     "name": "playground",
-    "dockerFile": "Dockerfile"
+    "dockerFile": "Dockerfile",
+    "forwardPorts": [
+        59102
+    ]
 }
